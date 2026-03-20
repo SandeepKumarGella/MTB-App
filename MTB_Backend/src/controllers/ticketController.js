@@ -142,7 +142,12 @@ const updateTicketStatus = async (req, res) => {
         return res.status(404).json({ message: "Movie or Ticket not found" });
     }
 
-    movieToUpdate.status = status;
+    if (movieToUpdate.availableTickets === 0) {
+        movieToUpdate.status = "SOLD_OUT";
+    } else {
+        movieToUpdate.status = status;
+    }
+    
     await movieToUpdate.save();
 
     res.status(200).json({ message: "Status updated successfully", movie: movieToUpdate });

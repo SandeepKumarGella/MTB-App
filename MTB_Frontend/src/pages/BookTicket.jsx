@@ -40,7 +40,7 @@ const BookTicket = () => {
   const cols = Array.from({ length: 20 }, (_, i) => i + 1);
 
   const handleSeatClick = (seatId) => {
-    if (bookedSeats.includes(seatId)) return;
+    if ((movie && movie.availableTickets === 0) || bookedSeats.includes(seatId)) return;
 
     if (selectedSeats.includes(seatId)) {
       setSelectedSeats(selectedSeats.filter(s => s !== seatId));
@@ -108,7 +108,7 @@ const BookTicket = () => {
             {rows.map(row => (
               cols.map(col => {
                 const seatId = `${row}${col}`;
-                const isBooked = bookedSeats.includes(seatId);
+                const isBooked = (movie && movie.availableTickets === 0) || bookedSeats.includes(seatId);
                 const isSelected = selectedSeats.includes(seatId);
                 
                 let className = "seat";
