@@ -110,8 +110,13 @@ const AdminDashboard = () => {
               </button>
               <button 
                 className="admin-action-btn" 
-                style={{ backgroundColor: "#ef4444", color: "white" }}
-                onClick={() => { fetchMovies(); alert("Dashboard Refreshed!"); }}
+                style={{ backgroundColor: "var(--btn-cyan)", color: "white" }}
+                onClick={() => {
+                  let newStatus = "AVAILABLE";
+                  if (movie.availableTickets === 0) newStatus = "SOLD_OUT";
+                  else if (movie.availableTickets <= movie.totalTickets / 2) newStatus = "BOOK_ASAP";
+                  handleUpdateStatus(movie._id, movie.movieName, newStatus);
+                }}
               >
                 Refresh Availability
               </button>

@@ -18,4 +18,23 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Response interceptor
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear local storage and redirect to login if token is expired/invalid
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("loginId");
+      
+      // Prevent redirect loop if already on login page
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

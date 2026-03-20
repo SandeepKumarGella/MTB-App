@@ -14,10 +14,10 @@ const { protect, authorizeRoles } = require("../middlewares/authMiddleware");
 router.post("/", protect, authorizeRoles("ADMIN"), addMovie);
 
 // Get all movies
-router.get("/", protect, getAllMovies);
+router.get("/", getAllMovies);
 
 // Search movies
-router.get("/search", protect, searchMovies);
+router.get("/search", searchMovies);
 
 // Admin delete movie
 router.delete("/delete/:id", protect, authorizeRoles("ADMIN"), deleteMovie);
